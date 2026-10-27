@@ -29,6 +29,18 @@ Mijn testset (16 op 20) draaide ik met Opus 5.5. Opus is dus het model waarvan i
 
 Dat is ongeveer 143× mijn volume: tussen 10× en 1.000× in.
 
+## Per medewerker, voltijds
+
+Mijn tempo (13 reacties per dag) × 220 werkdagen = 2.860 runs per jaar. Gekozen op 2026-10-27: dit toont beter wat de tool kost voor één medewerker dan mijn eigen vakantiewerk.
+
+| Model | Per jaar |
+|---|---:|
+| Haiku 4.5 | $20,70 · €18,42 |
+| Sonnet 5.5 (berekend) | $41,40 · €36,85 |
+| Opus 5.5 (berekend) | $82,82 · €73,70 |
+
+Berekend met dezelfde onafgeronde kost per run als het team (teamkost × 2.860 / 409.200).
+
 ## Hoe ik mat
 
 `/context` werkte niet: het startte de skill `context` van de cursusrepo in plaats van het ingebouwde commando. Daarom mat ik met een verschil, in één sessie met `/model claude-haiku-4-5`:
@@ -63,6 +75,33 @@ Kost per run via de API, Haiku 4.5: 3.159 × $1 / 1M + 816 × $5 / 1M = $0,0072.
 - In meting 2 stond ook een regel `claude-haiku-5-5` ($0,0006). Waarschijnlijk een hulptaakje van Claude Code op de achtergrond, niet mijn run.
 - Sonnet 5.5 en Opus 5.5 zijn berekend met dezelfde tokens als Haiku 4.5, niet gemeten. Elk model telt tokens anders en schrijft een ander lang antwoord.
 - Mijn succespercentage (16 op 20) mat ik met Opus 5.5. Of Haiku 4.5 even goed labelt, weet ik niet.
+
+## Haiku 5.5 (setup B)
+
+Gemeten op 2026-10-27, nieuwe sessie, `/model claude-haiku-5-5`, prompt v2 + input T01. Zelfde verschilmethode.
+
+| Soort | Meting 1 | Meting 2 | Verschil |
+|---|---:|---:|---:|
+| Input | 512 | 4.400 | 3.888 |
+| Cache write | 23.500 | 26.200 | 2.700 |
+| Cache read | 178.200 | 232.100 | 53.900 |
+| Output | 2.600 | 4.000 | ± 1.400 |
+| Requests | 3 | 4 | 1 |
+| Kost (`/cost`) | $0,0078 | $0,0100 | $0,0022 |
+
+Jouw deel = 3.888 + 2.700 = 6.588 input-tokens, en ± 1.400 output-tokens.
+
+Kost per run via de API, Haiku 5.5 ($0,10 input · $0,50 output per 1M, geldt tot 100K tokens per prompt): 6.588 × $0,10 / 1M + 1.400 × $0,50 / 1M = $0,0014 · €0,0012.
+
+| Volume | Per jaar |
+|---|---:|
+| 1 medewerker (2.860 runs) | $3,89 · €3,46 |
+| Team (409.200 runs) | $556 · €495 |
+
+Onzeker:
+- Output staat afgerond op `4.0k` en `2.6k`: het verschil ligt tussen ± 1.300 en 1.500. Kost per run blijft $0,0013 à $0,0014.
+- Meting 1 telde 3 requests voor alleen `ok`: Claude deed er iets extra bij. Het verschil haalt dat weg.
+- Haiku 5.5 gebruikte meer tokens dan Haiku 4.5 (6.588 tegen 3.159 input, 1.400 tegen 816 output). Haiku 5.5 denkt standaard na voordat het antwoordt, wat output-tokens kost. Toch is het ± 5× goedkoper per run, omdat de prijs per token 10× lager ligt.
 
 ## Meting 0 (niet gebruikt)
 

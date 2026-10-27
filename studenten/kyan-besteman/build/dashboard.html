@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard labeltool</title>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --card: #ffffff;
+    --text: #1d1d1b;
+    --muted: #5f5e58;
+    --line: #e2e0d8;
+    --accent: #2f5d8a;
+    --good: #2e7040;
+    --good-bg: #e6f2e8;
+    --warn: #8a5a00;
+    --warn-bg: #fbf0d9;
+    --bad: #a23a2c;
+    --bad-bg: #f8e4e0;
+    --na: #6b6a64;
+    --na-bg: #eeede8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161614;
+      --card: #20201d;
+      --text: #ecebe6;
+      --muted: #a8a69e;
+      --line: #36352f;
+      --accent: #8bb4dd;
+      --good: #8fd19e;
+      --good-bg: #1f3325;
+      --warn: #f0c46b;
+      --warn-bg: #3a2f17;
+      --bad: #f19a8c;
+      --bad-bg: #3d221d;
+      --na: #b4b2aa;
+      --na-bg: #2c2b27;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161614;
+    --card: #20201d;
+    --text: #ecebe6;
+    --muted: #a8a69e;
+    --line: #36352f;
+    --accent: #8bb4dd;
+    --good: #8fd19e;
+    --good-bg: #1f3325;
+    --warn: #f0c46b;
+    --warn-bg: #3a2f17;
+    --bad: #f19a8c;
+    --bad-bg: #3d221d;
+    --na: #b4b2aa;
+    --na-bg: #2c2b27;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }
+  header h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  header p { margin: 0; color: var(--muted); font-size: .9rem; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 16px;
+    margin-top: 16px;
+  }
+  h2 { font-size: 1.1rem; margin: 0 0 12px; }
+  .src { color: var(--muted); font-size: .8rem; margin: 10px 0 0; }
+  .big { font-size: 2.6rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .big small { font-size: 1.1rem; font-weight: 500; color: var(--muted); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+  .stat { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+  .stat b { display: block; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: .8rem; }
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: .85rem; font-weight: 600; white-space: nowrap;
+  }
+  .ok { background: var(--good-bg); color: var(--good); }
+  .warn { background: var(--warn-bg); color: var(--warn); }
+  .bad { background: var(--bad-bg); color: var(--bad); }
+  .na { background: var(--na-bg); color: var(--na); font-style: italic; font-weight: 500; }
+  .claim-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; }
+  .claim-row span.lbl { color: var(--muted); font-size: .9rem; min-width: 150px; }
+  ul { padding-left: 20px; margin: 8px 0 0; }
+  li { margin-bottom: 4px; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: .8rem; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.total td { font-weight: 700; border-bottom: none; }
+  .note { color: var(--muted); font-size: .85rem; }
+  .range {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+  }
+  .weak { border-left: 4px solid var(--warn); padding-left: 12px; margin-top: 4px; }
+  @media (max-width: 420px) {
+    .big { font-size: 2.2rem; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    table { font-size: .85rem; }
+    th, td { padding: 7px 4px; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>Labeltool klantenreacties</h1>
+  <p>Prompt v2 · cijfers van 20, 21 en 27 oktober 2026 · alle inputs geanonimiseerd</p>
+</header>
+
+<!-- 1. Score met foutmarge -->
+<section>
+  <h2>Mijn score met foutmarge</h2>
+  <div class="big">8<small>/10</small></div>
+  <p class="note" style="margin:6px 0 0">Label juist, prompt v2, <code>claude-opus-5-5</code></p>
+  <div class="stats">
+    <div class="stat"><b>8 – 8</b><span>min – max</span></div>
+    <div class="stat"><b>10</b><span>n (inputs)</span></div>
+    <div class="stat"><b>3</b><span>runs</span></div>
+  </div>
+  <div class="scroll" style="margin-top:14px">
+    <table>
+      <thead><tr><th>Versie</th><th class="num">Run 1</th><th class="num">Run 2</th><th class="num">Run 3</th><th class="num">Min – max</th></tr></thead>
+      <tbody>
+        <tr><td>v1</td><td class="num">7/10</td><td class="num">7/10</td><td class="num">6/10</td><td class="num">6 – 7</td></tr>
+        <tr><td>v2</td><td class="num">8/10</td><td class="num">8/10</td><td class="num">8/10</td><td class="num">8 – 8</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="src">Bron: foutmarge.md. Alleen het label telt, de velden niet.</p>
+</section>
+
+<!-- 2. Claim -->
+<section>
+  <h2>Mijn claim: "prompt v2 labelt beter dan v1"</h2>
+  <div class="claim-row"><span class="lbl">Volgens de regel</span><span class="tag ok">Bevestigd</span></div>
+  <div class="claim-row"><span class="lbl">Advies na analyse</span><span class="tag bad">Ingetrokken</span></div>
+  <div class="claim-row"><span class="lbl">Mijn beslissing</span><span class="tag bad">Ingetrokken</span></div>
+  <ul>
+    <li>Regel: laagste van v2 (8) ligt hoger dan hoogste van v1 (7).</li>
+    <li>Maar T05 is aangepast na de v1-runs. Met het oude antwoord: v1 7–8, v2 7–7. Dan overlappen ze.</li>
+    <li>En v2 is geschreven met T02 en T05. Zonder die twee: v1 6–7, v2 6–6. Geen verschil meer.</li>
+    <li>T08 is in v2 drie keer fout, in v1 maar één keer.</li>
+  </ul>
+  <p class="src">Bron: foutmarge.md</p>
+</section>
+
+<!-- 3. Drie setups -->
+<section>
+  <h2>Drie setups</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Setup</th><th class="num">Score</th><th class="num">Output-tokens</th><th class="num">Kost per run</th></tr></thead>
+      <tbody>
+        <tr><td><b>A</b> Sonnet 5.5<br><span class="note">effort medium</span></td><td class="num">7/10</td><td class="num">176</td><td class="num">€0,0129<br><span class="note">berekend</span></td></tr>
+        <tr><td><b>B</b> Haiku 5.5<br><span class="note">standaard</span></td><td class="num">8/10</td><td class="num">620</td><td class="num">€0,0012<br><span class="note">gemeten</span></td></tr>
+        <tr><td><b>C</b> Opus 5.5<br><span class="note">standaard</span></td><td class="num">8/10</td><td class="num">347</td><td class="num">€0,0258<br><span class="note">berekend</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">n = 10, 1 run per setup. Met 1 run is er geen foutmarge per setup.</p>
+  <p class="note">Sonnet en Opus zijn berekend met de tokens van Haiku 4.5 (aanname). Gemeten zijn Haiku 4.5 (€0,0064 per run) en Haiku 5.5 (€0,0012 per run, setup B).</p>
+  <p class="src">Bron: modellen.md, kosten.md</p>
+</section>
+
+<!-- 4. Kost per run en per jaar -->
+<section>
+  <h2>Kost per run en per jaar</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Model</th><th class="num">Per run</th><th class="num">1 medewerker / jaar</th><th class="num">Team / jaar</th></tr></thead>
+      <tbody>
+        <tr><td>Haiku 4.5 <span class="note">gemeten</span></td><td class="num">€0,0064</td><td class="num">€18,42</td><td class="num">€2.636</td></tr>
+        <tr><td>Haiku 5.5 <span class="note">gemeten</span></td><td class="num">€0,0012</td><td class="num">€3,46</td><td class="num">€495</td></tr>
+        <tr><td>Sonnet 5.5 <span class="note">berekend</span></td><td class="num">€0,0129</td><td class="num">€36,85</td><td class="num">€5.272</td></tr>
+        <tr><td>Opus 5.5 <span class="note">berekend</span></td><td class="num">€0,0258</td><td class="num">€73,70</td><td class="num">€10.545</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">1 medewerker: 13 reacties × 220 dagen = 2.860 runs per jaar, voltijds. Team: 124 medewerkers × 15 reacties × 220 dagen = 409.200 runs per jaar. 220 werkdagen: gevraagd aan een medewerker van de NMBS. 1 dollar = 0,89 euro.</p>
+  <p class="src">Bron: kosten.md</p>
+</section>
+
+<!-- 5. Value chain -->
+<section>
+  <h2>Value chain (hele team, per jaar)</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Schakel</th><th class="num">Waarde</th><th>Bron</th></tr></thead>
+      <tbody>
+        <tr><td>Winst bij opzoeken</td><td class="num">makkelijk ± 2 min<br>ingewikkeld ± 5 min<br>min draaien en nakijken: gemiddeld ± 2,4 min</td><td class="note">eigen schatting</td></tr>
+        <tr><td>Fouten herstellen</td><td class="num">20% × 3 min = − 0,6 min</td><td class="note">score 8/10 gemeten, 3 min geschat</td></tr>
+        <tr><td>Winst per reactie</td><td class="num">± 1,8 min</td><td class="note">berekend</td></tr>
+        <tr><td>Volume</td><td class="num">409.200 / jaar</td><td class="note">124 × 15 × 220, gevraagd aan een medewerker</td></tr>
+        <tr><td>Uren per jaar</td><td class="num">99 u per medewerker<br>12.276 u team</td><td class="note">berekend</td></tr>
+        <tr><td>Uurkost voor de werkgever</td><td class="num">± €53,85</td><td class="note">€60.000 bruto ÷ 1.672 u (manager) × 1,5 (vuistregel uit de les)</td></tr>
+        <tr><td>Waarde</td><td class="num">± €661.100</td><td class="note">12.276 u × €53,85</td></tr>
+        <tr><td>Kost van de tool</td><td class="num">€495 (Haiku 5.5)</td><td class="note">gemeten</td></tr>
+        <tr class="total"><td>Netto per jaar</td><td class="num">± €660.600</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 style="margin-top:18px">Bereik (foutmarge 6–8 op 10)</h2>
+  <div class="range">
+    <div class="stat"><b>± €440.000</b><span>laag: 6/10 (v1, run 3)</span></div>
+    <div class="stat"><b>± €660.600</b><span>basis: 8/10 (v2, Haiku 5.5)</span></div>
+  </div>
+  <p class="note">Hoger dan de basis kan, als de tool 20 op 20 haalt en ik niet meer alles hoef te lezen. Hoeveel hoger: <span class="tag na">nog niet gemeten</span></p>
+
+  <h2 style="margin-top:18px">Mijn zwakste cijfer</h2>
+  <div class="weak">
+    <p style="margin:0"><b>De tijdswinst bij het opzoeken</b> (± 2 min makkelijk, ± 5 min ingewikkeld). Zelf geschat, nooit geklokt, en het heeft de grootste invloed op het netto.</p>
+    <p class="note" style="margin:6px 0 0">Halveert die winst, dan daalt het netto naar ± €43.600 (−93%), want draaien, nakijken en fouten herstellen blijven. De foutmarge (8 → 6 op 10) kost maar −33%. Volgende stap: de tijden echt klokken, met en zonder de tool.</p>
+  </div>
+  <p class="src">Bron: waarde.md (week 5), posts/week-04.md.</p>
+</section>
+
+</main>
+</body>
+</html>

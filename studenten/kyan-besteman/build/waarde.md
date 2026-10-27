@@ -99,3 +99,37 @@ Als die winst de helft is:
 De opzoekwinst halveren doet het netto met ± 70% dalen, niet met 50%. De tijd om de tool te draaien en na te kijken (1 min) blijft gelijk. Bij makkelijke reacties wint de tool dan niets meer. Onder ± 1 min opzoekwinst per reactie levert de tool geen tijd meer op.
 
 Omgekeerd: haalt de tool 20 op 20, dan hoef ik de reactie misschien niet meer volledig te lezen. Dan komt er tijd bij het lezen bij (1–3 min). Dat is nu nog niet zo.
+
+---
+
+## Week 5: herberekend met fouten, werkgeverskost en foutmarge (2026-10-27)
+
+De tabellen hierboven blijven staan als week 4. Drie dingen gecorrigeerd in week 5:
+
+1. **Fouten herstellen** zat er niet in. Een fout label kost ± 3 min om opnieuw na te lezen (eigen schatting). De fouten zitten in de ingewikkelde reacties.
+2. **Uurkost voor de werkgever** in plaats van bruto: €35,90 × 1,5 = ± €53,85. De factor 1,5 is de vuistregel uit de les, geen cijfer van de NMBS.
+3. **Kost van de tool**: Haiku 5.5, gemeten op 2026-10-27: €495 per jaar voor het team (zie `kosten.md`).
+
+Bereik: 6 tot 8 op 10. 8 is de beste meting (v2, 3 runs, en Haiku 5.5), 6 de laagste (v1, run 3). Mijn claim dat v2 beter is, is ingetrokken, dus de laagste score van v1 hoort erbij.
+
+| Schakel | Laag (6/10) | Basis (8/10) | Bron |
+|---|---:|---:|---|
+| Winst bij opzoeken, per reactie | 2,4 min | 2,4 min | eigen schatting (week 4) |
+| − fouten herstellen | 40% × 3 = − 1,2 min | 20% × 3 = − 0,6 min | gemeten × geschat |
+| **Winst per reactie** | 1,2 min | **1,8 min** | |
+| Per medewerker per jaar (15 × 220) | 66 u | 99 u | |
+| Team per jaar (409.200 reacties) | 8.184 u | **12.276 u** | |
+| × €53,85 | ± €440.700 | ± €661.100 | |
+| − kost van de tool (Haiku 5.5) | − €495 | − €495 | gemeten |
+| **Netto per jaar** | **± €440.000** | **± €660.600** | |
+
+### Zwakste cijfer: de opzoekwinst
+
+Halveert de opzoekwinst, dan blijft er gemiddeld 0,72 min per reactie over (zie hierboven), min 0,6 min voor fouten = 0,12 min. Team: ± 818 u × €53,85 − €495 = **± €43.600 netto**.
+
+| Wat verandert | Netto daalt met |
+|---|---:|
+| Score van 8 naar 6 op 10 (foutmarge) | ± €220.000 (−33%) |
+| Opzoekwinst de helft | ± €617.000 (−93%) |
+
+Het zwakste cijfer weegt veel zwaarder dan de foutmarge.

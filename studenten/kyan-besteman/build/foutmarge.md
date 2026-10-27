@@ -36,7 +36,9 @@ Uit week 3: prompt v2 labelt beter dan v1. T02 gaf in v1 twee keer `onzeker` en 
 
 **Volgens de regel uit de README: bevestigd.** De laagste score van v2 (8) ligt hoger dan de hoogste van v1 (7).
 
-**Mijn advies: ingetrokken**, om twee redenen die ik hieronder uitleg. De beslissing is aan mij.
+**Mijn advies: ingetrokken**, om twee redenen die ik hieronder uitleg.
+
+**Mijn beslissing (21 oktober 2026): ingetrokken.**
 
 ### Waarom de uitslag wankel is
 
