@@ -12,6 +12,8 @@ Gemeten op 2026-10-20, in Claude Code, met prompt v2 en testinput T01.
 
 Wisselkoers: 1 dollar = 0,89 euro (koers van 20 oktober 2026).
 
+**Gecontroleerd in week 5 (27 oktober 2026):** de meting gebeurde met `claude-haiku-4-5` (volledige modelnaam, zie "Hoe ik mat"), en de prijs ($1 input · $5 output per 1M) is die van Haiku 4.5. Model en prijs kloppen, er viel niets te corrigeren. Haiku 5.5 is apart gemeten, zie "Haiku 5.5 (setup B)".
+
 Mijn testset (16 op 20) draaide ik met Opus 5.5. Opus is dus het model waarvan ik weet dat het werkt. Haiku is vier keer goedkoper, maar niet getest.
 
 ## Op schaal: het hele team
